@@ -28,7 +28,7 @@ class App extends React.Component {
               <div className = 'users'>
 
               <img src={item.img} className = 'img'></img>
-              <p className ='txt'>Nome do Usuário: {item.name} <br></br>
+              <p className ='txt'>Nome Usuário: {item.name} <br></br>
               ID: {item.id}
               Username: {item.username}</p>
               
