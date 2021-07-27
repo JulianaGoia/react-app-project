@@ -1,0 +1,36 @@
+.body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #484964;
+  font: normal 20px Arial;
+  list-style-type: none;
+  
+}
+
+
+.users {
+  background-color: #323351;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-top: 5px;
+  margin-bottom: -18px;
+  padding: 20px;
+ 
+}
+
+.img {
+  border-radius: 50%;
+  
+}
+
+.btn {
+  background-color: #ffffff;
+  
+
+}
