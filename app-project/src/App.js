@@ -5,12 +5,12 @@ import './App.css';
 //consumo da API para listar usuarios
 function  App() {
 
-  const [client, setClient] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [cardSelect, setCardSelect] = useState("");
-  const [selectClient, setSelectClient] = useState({});
-  const [value, setValue] = useState("");
-  const [showTransaction, setShowTransaction] = useState("none");
+  const [client, setClient] = useState([]); //const para fazer a listagem de clientes
+  const [modalOpen, setModalOpen] = useState(false); //const para abrir modal de pagamento
+  const [cardSelect, setCardSelect] = useState(""); //const para identificar as informações do cartão
+  const [selectClient, setSelectClient] = useState({}); //const para pegar o nome do cliente
+  const [value, setValue] = useState(""); //const para identifica o valor da transferência
+  const [showTransaction, setShowTransaction] = useState("none"); //const para abrir a modal de recibo de pagamento
   const [payment, setPayment] = useState("");
 
   //listagem de cartões
@@ -41,13 +41,32 @@ function  App() {
 }, [])
 
 
-// função para aparecer modal
-const showModal = () => {
-  setModalOpen(true);
+// função para abrir modal de pagamento
+const showModal = (index) => {
+  setModalOpen(true);  //a modal abre
+  setCardSelect(index);  //
+  setSelectClient(client[index]); //states que vai identificar o cliente e sua posiçao
 
 }
 
-const sendTransaction = () => {
+// função para fechar modal de pagamento
+const closeModal = () => {
+  setModalOpen(false);
+  setShowTransaction('none');
+  setPayment("");
+
+}
+
+ //função para fechar modal de recibo
+const resetPage = () => {
+  setPayment("");
+  setCardSelect("");
+  setShowTransaction("none");
+  
+}
+
+const sendTransaction = (event) => {
+  event.preventDefault()
 
   const transaction = {
     "card_number": cards[cardSelect].card_number,
@@ -63,10 +82,9 @@ const sendTransaction = () => {
         })
           .then(response => response.json())
           .then((data) => {
-              console.log(data)
               setModalOpen(false)
               setShowTransaction("block")
-        //condição para mostrar mensagem no recibo de pagamento
+        
               if (data.status === "Aprovada") {
                 setPayment("Pagamento concluído com sucesso.")
 
@@ -81,7 +99,7 @@ const sendTransaction = () => {
       <>
       {/*Lista de usuarios*/}
         <div className = 'body'>
-           {client.map(item => (
+           {client.map((item, index) => (
 
              <ul className = 'list'>
                   <li className = 'users'>
@@ -91,20 +109,27 @@ const sendTransaction = () => {
                   ID: {item.id}
                   Username: {item.username}</p>
 
-                  <input type='button' value='Pagar' className = 'btn' onClick = {() => showModal()}></input>
+                  {/* A 'index' identifica a posição do cliente na listagem */}
+                  <input type='button' value='Pagar' className = 'btn' onClick = {() => showModal(index)}></input>
                   </li>
              </ul>
             ))}
        </div>
 
        {/* Modal de pagamento*/}
-       <div className = "backdrop"  style = {{display: (modalOpen ? 'block' : 'none')}}>
-          <div className = "modal" >
-            <form className = "modal-form" >
-                <label className ="modal-label"> Pagamento para: {client.name}</label> 
+       {/* Fechar Modal pelo método de backdrop
+       <div className = "backdrop" style = {{display: (modalOpen ? 'block' : 'none')}} onClick = {() => modalOpen(false)}>
+          </div>
+       */}
+       
+          <div className = "modal" style = {{display: (modalOpen ? 'block' : 'none')}}>
+            <form className = "modal-form" onSubmit = {(event) => sendTransaction(event)}>
+                <p className ="modal-label"> Pagamento para: 
+                  <strong className = "clientName"> {selectClient.name} </strong>
+                </p> 
 
-                <input className = "form-input" type='number' placeholder='R$ 0.00'  ></input>
-                <select className = "form-select" required value = {cardSelect} onChange = {e => setCardSelect(e.target.value)}>
+                <input className = "form-input" type='number' placeholder='R$ 0.00'></input>
+                <select className = "form-select" required value = {cardSelect} onChange = {e => setPayment(e.target.value)}>
                   
                       {cards.map((card, i) => {
                         return <option key={'optionCard' + i} value={i}>Cartão com final {card.card_number.substring(12)}
@@ -112,20 +137,25 @@ const sendTransaction = () => {
                     })}
                 </select>
 
-                <button className = "form-button" onClick = {() => sendTransaction()}> Pagar </button>
+                <button className = "form-button" > Pagar </button>
+                <button className = "close-modal" onClick = {() => closeModal()}> Fechar </button>
             </form>
           </div>
-        </div>
+        
 
         {/* Recibo de pagamento*/}
-        <div className = "modal-receipt" style = {{ display: showTransaction }}>
-           <span className = "receipt-title"> Recibo de pagamento</span>
+        <div className = "modal-receipt" style = {{ display: showTransaction }} >
+           <div className = "receipt-title"> Recibo de pagamento</div>
+           
+           <div className = "receipt-msg"> {payment} </div>
 
-           <div className = "receipt-msg">
-              {payment}
+           <div className = "close-receipt">
+              <button onClick = {() => resetPage()}> X </button>
+
            </div>
-      
+           
         </div>
+        
         </>
     );
   }

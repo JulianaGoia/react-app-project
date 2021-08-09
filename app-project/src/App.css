@@ -1,4 +1,3 @@
-
 /*Lista de clientes*/
 .body{
   margin: -20px;
@@ -36,57 +35,16 @@
 
 /* Modal de pagamento*/
 .modal {
+  font: normal 18px Arial;
   background-color: #ffffff;
   width: 50vw;
-  height: 40vh;
+  height: 45vh;
   position: fixed;
   left: 25vw;
   top: 30vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  
-}
-
-.modal-form {
-  display: flex;
-  flex-direction: column; 
-  padding: 30px;
-  width: 100%;
-  
-}
-
-.modal-label {
-  background-color: #38395c;
-  color: #ffffff;
-  padding: 10px;
-
-}
-
-.form-input {
-  padding: 6px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  border-radius: 5px;
-  border-color: #EFEFEF;
-  
-}
-
-.form-select {
-  padding: 6px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-
-}
-
-.form-button {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  padding: 6px;
-  border-radius: 5px;
-  border-color: #EFEFEF;
-  cursor: pointer;
   
 }
 
@@ -101,32 +59,97 @@
 
 }
 
+.modal-form {
+  display: flex;
+  flex-direction: column; 
+  padding: 30px;
+  width: auto;
+  
+}
+
+.modal-label {
+  background-color: #38395c;
+  color: #ffffff;
+  padding: 10px;
+  position: relative;
+
+}
+
+.clientName {
+  color: yellow;
+}
+
+.form-input {
+  padding: 6px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+  border-color: #EFEFEF;
+  position: relative;
+  
+}
+
+.form-select {
+  padding: 6px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  position: relative;
+
+}
+
+.form-button {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 6px;
+  border-radius: 5px;
+  border-color: #EFEFEF;
+  cursor: pointer;
+  margin-bottom: 25px;
+  
+}
+
+.close-modal {
+  width: 15%;
+}
+
+
+
 /* Modal de recibo*/
  .modal-receipt {
+  font: normal 20px Arial;
   background-color: #ffffff;
-  border-radius: 10px;
   width: 40vw;
   height: 25vh;
   position: fixed;
   left: 30vw;
   top: 35vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  display: none;
-  
+
+}
+
+.container {
+  display: block;
 }
 
 .receipt-title {
   background-color: #38395c;
   color: #ffffff;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
 .receipt-msg {
-  color: coral;
+  color: rgb(0, 0, 0);
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+}
+
+.close-receipt {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
 }
